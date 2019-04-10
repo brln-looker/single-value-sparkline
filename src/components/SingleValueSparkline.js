@@ -7,6 +7,7 @@ const SingleValue = styled.div`
   font-family: "Open Sans", "Noto Sans JP", Helvetica, Arial, sans-serif;
   font-weight: 100;
   font-size: 72px;
+  padding: 10px
 `;
 
 const SingleValueSmall = styled.div`
@@ -15,6 +16,15 @@ const SingleValueSmall = styled.div`
 
 const SingleValueLarge = styled.div`
   font-size: 72px;
+`
+
+const TopBottomLayout = styled.div``
+
+const LeftRightLayout = styled.div`
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
 `
 
 export default class Hello extends React.Component {
@@ -34,20 +44,41 @@ export default class Hello extends React.Component {
     })
 
     const FontSizeWrapper = this.props.config.font_size === 'small' ? SingleValueSmall : SingleValueLarge
-    return (
-      <div>
-        <Sparkline
-          color={this.props.config.sparkline_color}
-          config={this.props.config}
-          data={dataToRender}
-        />
+    const sparkline = (
+      <Sparkline
+        key="sparkline"
+        color={this.props.config.sparkline_color}
+        config={this.props.config}
+        data={dataToRender}
+      />
+    )
 
-        <SingleValue>
-          <FontSizeWrapper>
-            {firstCellValue}
-          </FontSizeWrapper>
-        </SingleValue>
-      </div>
+    const singleValue = (
+      <SingleValue key="singleValue">
+        <FontSizeWrapper>
+          {firstCellValue}
+        </FontSizeWrapper>
+      </SingleValue>
+    )
+    let layout = [sparkline, singleValue]
+    let Container = TopBottomLayout
+    switch (this.props.config.chart_alignment) {
+      case 'bottom':
+        layout.reverse()
+        break
+      case 'left':
+        Container = LeftRightLayout
+        break
+      case 'right':
+        layout.reverse()
+        Container = LeftRightLayout
+        break
+    }
+
+    return (
+      <Container>
+        {layout}
+      </Container>
     )
   }
 }

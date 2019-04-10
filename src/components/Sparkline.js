@@ -17,7 +17,7 @@ export default class Sparkline extends React.Component {
         borderWidth: 0,
         type: 'area',
         margin: [2, 0, 2, 0],
-        width: 240,
+        width: 100,
         height: 100,
         style: {
           overflow: 'visible',
@@ -90,10 +90,31 @@ export default class Sparkline extends React.Component {
       }
   }
 
+  static average (array) {
+   return array.reduce((a, b) => a + b) / array.length
+  }
+
   render() {
     const options = { ...this.options }
-    options.series[0].data = this.props.data
+    const compress = parseInt(this.props.config.data_granularity)
+    if (compress && compress > 1) {
+      const compressedData = []
+      let bucket = []
+      for (let datum of this.props.data) {
+        bucket.push(datum)
+        if (bucket.length === compress) {
+          compressedData.push(Sparkline.average(bucket))
+          bucket = []
+        }
+      }
+      options.series[0].data = compressedData
+    } else {
+      options.series[0].data = this.props.data
+    }
+
     options.plotOptions.series.color = this.props.config.sparkline_color ? this.props.config.sparkline_color[0] : null
+    options.chart.width = this.props.config.width
+    options.chart.height = this.props.config.height
 
     return (
       <Container>

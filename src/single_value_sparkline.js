@@ -19,8 +19,42 @@ looker.plugins.visualizations.add({
       label: "Sparkline Color",
       display: "color",
       default: "#5b5d9a"
+    },
+    chart_alignment: {
+      type: "string",
+      label: "Chart Alignment",
+      display: "radio",
+      values: [
+        {"Top": "top"},
+        {"Bottom": "bottom"},
+        {"Left": "left"},
+        {"Right": "right"},
+      ],
+      default: "top"
+    },
+    data_granularity: {
+      type: "string",
+      label: "Data Granularity",
+      display: "radio",
+      values: [
+        {"1x": "1"},
+        {"2x": "2"},
+        {"5x": "5"},
+        {"10x": "10"},
+        {"100x": "100"}
+      ],
+      default: "1"
+    },
+    width: {
+      type: "string",
+      label: "Sparkline Width",
+      default: 100,
+    },
+    height: {
+      type: "string",
+      label: "Sparkline Height",
+      default: 100,
     }
-
   },
 
   create: function(element, config) {
