@@ -111,7 +111,6 @@ export default class Sparkline extends React.Component {
     } else {
       options.series[0].data = this.props.data
     }
-
     options.plotOptions.series.color = this.props.config.sparkline_color ? this.props.config.sparkline_color[0] : null
     options.chart.width = this.props.config.width
     options.chart.height = this.props.config.height

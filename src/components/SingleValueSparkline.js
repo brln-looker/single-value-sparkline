@@ -38,7 +38,10 @@ export default class Hello extends React.Component {
     }
 
     let firstRow = this.props.data[0];
-    const firstCellValue = firstRow[this.props.queryResponse.fields.measures[0].name].rendered
+    let firstCellValue = firstRow[this.props.queryResponse.fields.measures[0].name].rendered
+    if (!firstCellValue) {
+      firstCellValue = firstRow[this.props.queryResponse.fields.measures[0].name].value
+    }
     const dataToRender = this.props.data.map(d => {
       return d[this.props.queryResponse.fields.measures[0].name].value
     })
