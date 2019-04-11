@@ -45,12 +45,12 @@ looker.plugins.visualizations.add({
       ],
       default: "1"
     },
-    width: {
+    sparkline_width: {
       type: "string",
       label: "Sparkline Width",
       default: 100,
     },
-    height: {
+    sparkline_height: {
       type: "string",
       label: "Sparkline Height",
       default: 100,
